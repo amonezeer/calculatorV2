@@ -1,0 +1,122 @@
+﻿<Window x:Class="IOSCalculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:IOSCalculator"
+        Title="IOSCalculator777" Height="700" Width="400" Background="Black">
+
+    <Window.Resources>
+
+        <Style x:Key="CalculatorButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Height" Value="80" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="#505050" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="40" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="OperatorButtonStyle" BasedOn="{StaticResource CalculatorButtonStyle}" TargetType="Button">
+            <Setter Property="Background" Value="#FF9500" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+
+        <Style x:Key="SpecialButtonStyle" BasedOn="{StaticResource CalculatorButtonStyle}" TargetType="Button">
+            <Setter Property="Background" Value="#A5A5A5" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+
+        <Style x:Key="NumberButtonStyle" BasedOn="{StaticResource CalculatorButtonStyle}" TargetType="Button">
+            <Setter Property="Background" Value="#505050" />
+        </Style>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <local:CalculatorViewModel />
+    </Window.DataContext>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border BorderThickness="4" BorderBrush="#666666" CornerRadius="20" Margin="-6,20,0,484" Background="#000000" Grid.RowSpan="2" RenderTransformOrigin="0.5,0.5">
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.042"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Border.RenderTransform>
+            <StackPanel Margin="0,13,12,0">
+
+                <TextBlock Text="{Binding CurrentOperation}" 
+                           FontSize="28" 
+                           Foreground="Gray" 
+                           Background="#000000" 
+                           TextAlignment="Right" 
+                           Padding="10" 
+                           Height="38" 
+                           FontFamily="Arial" Width="350" />
+
+                <TextBlock Text="{Binding Display}"
+                           FontSize="64"
+                           Foreground="White"
+                           Background="#000000"
+                           TextAlignment="Right"
+                           Padding="10"
+                           Height="71"
+                           FontFamily="Arial" Width="341" RenderTransformOrigin="0.5,0.5" >
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="0"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="0"/>
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+
+        <UniformGrid Grid.Row="1" Columns="4" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+
+            <Button Content="C" Command="{Binding ClearCommand}" Style="{StaticResource SpecialButtonStyle}" />
+            <Button Content="±" Command="{Binding NegateCommand}" Style="{StaticResource SpecialButtonStyle}" />
+            <Button Content="%" Command="{Binding PercentCommand}" Style="{StaticResource SpecialButtonStyle}" />
+            <Button Content="÷" CommandParameter="/" Command="{Binding OperatorCommand}" Style="{StaticResource OperatorButtonStyle}" />
+
+            <Button Content="7" CommandParameter="7" Command="{Binding NumberCommand}" Style="{StaticResource NumberButtonStyle}" />
+            <Button Content="8" CommandParameter="8" Command="{Binding NumberCommand}" Style="{StaticResource NumberButtonStyle}" />
+            <Button Content="9" CommandParameter="9" Command="{Binding NumberCommand}" Style="{StaticResource NumberButtonStyle}" />
+            <Button Content="×" CommandParameter="*" Command="{Binding OperatorCommand}" Style="{StaticResource OperatorButtonStyle}" />
+
+            <Button Content="4" CommandParameter="4" Command="{Binding NumberCommand}" Style="{StaticResource NumberButtonStyle}" />
+            <Button Content="5" CommandParameter="5" Command="{Binding NumberCommand}" Style="{StaticResource NumberButtonStyle}" />
+            <Button Content="6" CommandParameter="6" Command="{Binding NumberCommand}" Style="{StaticResource NumberButtonStyle}" />
+            <Button Content="−" CommandParameter="-" Command="{Binding OperatorCommand}" Style="{StaticResource OperatorButtonStyle}" />
+
+            <Button Content="1" CommandParameter="1" Command="{Binding NumberCommand}" Style="{StaticResource NumberButtonStyle}" />
+            <Button Content="2" CommandParameter="2" Command="{Binding NumberCommand}" Style="{StaticResource NumberButtonStyle}" />
+            <Button Content="3" CommandParameter="3" Command="{Binding NumberCommand}" Style="{StaticResource NumberButtonStyle}" />
+            <Button Content="+" CommandParameter="+" Command="{Binding OperatorCommand}" Style="{StaticResource OperatorButtonStyle}" />
+
+            <Button Content="0" CommandParameter="0" Command="{Binding NumberCommand}" Grid.ColumnSpan="2" Style="{StaticResource NumberButtonStyle}" 
+                    HorizontalContentAlignment="Left" Padding="20,0,0,0" />
+            <Button Content="." CommandParameter="." Command="{Binding NumberCommand}" Style="{StaticResource NumberButtonStyle}" />
+            <Button Content="=" Command="{Binding EqualsCommand}" Style="{StaticResource OperatorButtonStyle}" />
+        </UniformGrid>
+    </Grid>
+</Window>
